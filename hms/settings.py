@@ -31,12 +31,27 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "jazzmin",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    
+    # Custom Apps
+    "userauths",
+    "user_dashboard",
+    "hotel",
+    "addon",
+    
+    # Third Party Apps
+    "import_export",
+    "crispy_forms",
+    "mathfilters",
+    "ckeditor_uploader",
+    "django_ckeditor_5",
+    "taggit",
 ]
 
 MIDDLEWARE = [
@@ -121,3 +136,98 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+JAZZMIN_SETTINGS = {
+    "site_header": "HMS",
+    "site_brand": "Hotel Manegment System",
+    "site_logo": "assets/imgs/theme/loading.gif",
+    "copyright": "Tushar Bodarya",
+    "welcome_sign": "Welcome to the HMS, Login Now",
+    "topmenu_links": [
+
+        {"name": "Home",  "url": "admin:index", "permissions": ["auth.view_user"]},
+
+        {"name": "Company", "url": "/admin/addons/company/"},
+        
+        {"name": "Users", "url": "/admin/userauths/user/"},
+
+        {"model": "AUTH_USER_MODEL.User"},
+    ],
+    "order_with_respect_to": [
+        "hotel",
+        "hotel.Hotel",
+        "hotel.Room",
+        "hotel.Booking",
+        "hotel.BookingDetail",
+        "hotel.Guest",
+        "hotel.RoomServices",
+        "userauths",
+        "addons"
+    ],
+    "icons": {
+        "admin.LogEntry": "fas fa-file",
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        
+        "userauths.User": "fas fa-user",
+        "userauths.Profile": "fas fa-address-card",
+        
+        "hotel.Hotel": "fas fa-th",
+        "hotel.Booking": "fas fa-calendar-week",
+        "hotel.BookingDetail": "fas fa-calendar-alt",
+        "hotel.Guest": "fas fa-user",
+        "hotel.Room": "fas fa-bed",
+        "hotel.RoomServices": "fas fa-utensils",
+        "hotel.Notification": "fas fa-bell",
+        "hotel.Coupon": "fas fa-tag",
+        "hotel.Bookmark": "fas fa-heart",
+        
+    },
+    
+    "show_ui_builder": True,
+
+}
+
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": True,
+    "brand_small_text": False,
+    "brand_colour":"navbar-indigo",
+    "accent":"accent-olive",
+    "navbar":"navbar-indigo navbar-dark",
+    "no_navbar_border":False,
+    "navbar_fixed":False,
+    "layout_boxed":False,
+    "footer_fixed":False,
+    "sidebar_fixed":False,
+    "sidebar": "sidebar-dark-indigo"
+}
+
+AUTH_USER_MODEL = 'userauths.User'
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_CONFIGS = {
+    'default': {
+        'skin': 'moono',
+        'codeSnippet_theme': 'monokai',
+        'toolbar': 'all',
+        'width': 600,
+        'extraPlugins': ','.join([
+            'uploadimage',
+            'codesnippet',
+            'div',
+            'autolink',
+            'autoembed',
+            'embedsemantic',
+            'autogrow',
+            'devtools',
+            'widget',
+            'lineutils',
+            'clipboard',
+            'dialog',
+            'dialogui',
+            'elementspath'
+        ]),
+    },
+}
