@@ -1,3 +1,13 @@
 from django.shortcuts import render
 
-# Create your views here.
+from userauths.models import User, Profile
+from userauths.forms import UserRegisterForm
+
+def RegisterView(request):
+    form = UserRegisterForm()
+    
+    context = {
+        "form": form,
+    }
+    
+    return render(request, "userauths/register.html", context)
