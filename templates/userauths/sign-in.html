@@ -1,0 +1,40 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div id="titlebar" class="gradient margin-bottom-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Sign Up</h2>
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li><a href="index_1.html">Home</a></li>
+                        <li>Sign Up</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <section id="contact" class="margin-bottom-70">
+                <form id="contactform" method="POST" autocomplete="off">
+                    {% csrf_token %}
+                    <input type="email" class="" name="email" id="email" placeholder="Enter Email" required>
+                    <input type="password" class="" name="password" id="password" placeholder="Enter Password" required>
+                    <input type="submit" class="submit button" id="submit" value="Login" />
+                </form>
+            </section>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="category_container_item_part">
+                    <img src="https://img.freepik.com/free-vector/tablet-login-concept-illustartion_114360-7962.jpg?w=2000" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
