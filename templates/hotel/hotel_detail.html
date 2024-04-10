@@ -73,40 +73,22 @@
             </div>
 
             <div class="utf_listing_section">
-                <h3 class="utf_listing_headline_part margin-top-50 margin-bottom-40">Pricing</h3>
+                <h3 class="utf_listing_headline_part margin-top-50 margin-bottom-40">Rooms</h3>
                 <div class="show-more">
                     <div class="utf_pricing_list_section">
-                        <h4>Menu Listing</h4>
+                        <h4>Room Types</h4>
                         <ul>
-                            <li>
-                                <h5>Burger <sub class="ppl-offer label-light-success">20% Off</sub></h5>
-                                <p>Beef, Salad, Mayonnaise, Spicey Relish, Cheese</p>
-                                <span>$120</span>
-                            </li>
-                            <li>
-                                <h5>Goat Cheese Mousse</h5>
-                                <p>Caramelized Fig, Plums, Macadamia Nuts and Sorrel</p>
-                                <span>$150</span>
-                            </li>
-                            <li>
-                                <h5>Pizza <sub class="ppl-offer label-light-success">10% Off</sub></h5>
-                                <p>Cheddar Cheese, Lettuce, Tomato, Onion, Dill Pickles</p>
-                                <span>$130</span>
-                            </li>
-                            <li>
-                                <h5>French Crostini <sub class="ppl-offer label-light-success">10% Off</sub></h5>
-                                <p>Breakfast Sandwich on a Roll with 2 Eggs</p>
-                                <span>$130</span>
-                            </li>
-                            <li>
-                                <h5>Caramelised Rum Punch <sub class="ppl-offer label-light-success">15% Off</sub></h5>
-                                <p>Caramelised Mount Gay Eclipse with a Picked Watermelon</p>
-                                <span>$120</span>
-                            </li>
-                            <li>
-                                <h5><strong>Tatel Price</strong></h5>
-                                <span><strong>$650</strong></span>
-                            </li>
+                            
+                            {% for hotel_room_type in hotel.hotel_room_types.all %}
+                                <li>
+                                    <h5>{{hotel_room_type.type}}</h5>
+                                    <p><strong>Price: </strong> {{hotel_room_type.price}} person</p>
+                                    <p><strong>Room Capacity: </strong> {{hotel_room_type.room_capacity}} person</p>
+                                    <p><strong>Number of Beds: </strong> {{hotel_room_type.number_of_beds}} Beds</p>
+                                    <p><a href="{% url 'hotel:room-type-detail' hotel_room_type.hotel.slug hotel_room_type.slug %}" style="border-bottom: 2px gray dashed;margin-top: 10px;">View More</a></p>
+                                    <span>${{hotel_room_type.price}}</span>
+                                </li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
@@ -403,46 +385,49 @@
                 data-tip-content="Listing has been verified and belongs business owner or manager."> <i
                     class="sl sl-icon-check"></i> Now Available</div>
             <div class="utf_box_widget booking_widget_box">
-                <h3><i class="fa fa-calendar"></i> Booking
-                    <div class="price">
-                        <span>220$<small>person</small></span>
-                    </div>
-                </h3>
+                <h3><i class="fa fa-calendar"></i> Check Room Availibity</h3>
                 <div class="row with-forms margin-top-0">
-                    <div class="col-lg-12 col-md-12">
-                        <select class="utf_chosen_select_single">
-                            <option label="Select Room">Select Room</option>
-                            <option>Deluxe Room</option>
-                            <option>Standard Single Room</option>
-                            <option>Signature Room</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row with-forms margin-top-0">
-                    <div class="col-lg-12 col-md-12 select_date_box">
-                        <input type="text" id="date-picker" placeholder="Select Date" readonly="readonly">
-                        <i class="fa fa-calendar"></i>
-                    </div>
-                </div>
-                <div class="row with-forms">
-                    <div class="col-lg-12">
-                        <div class="panel-dropdown">
-                            <a href="#">Guests <span class="qtyTotal" name="qtyTotal">1</span></a>
-                            <div class="panel-dropdown-content">
-                                <div class="qtyButtons">
-                                    <div class="qtyTitle">Adults</div>
-                                    <input type="text" name="qtyInput" value="1">
-                                </div>
-                                <div class="qtyButtons">
-                                    <div class="qtyTitle">Children</div>
-                                    <input type="text" name="qtyInput" value="1">
+                    <form action="{% url 'booking:check_room_availability' %}" method="post" class="row with-forms margin-top-0">
+                        {% csrf_token %}
+                        <input type="hidden" name="hotel_id" value="{{hotel.id}}" id="hotel_id">
+                        <div class="col-lg-12 col-md-12 select_date_box">
+                            <label for="">Check-in Date</label>
+                            <input type="date" id="checkin" value="" name="checkin" placeholder="Select Date">
+                        </div>
+                        <div class="col-lg-12 col-md-12 select_date_box">
+                            <label for="">Check-out Date</label>
+                            <input type="date" id="checkout" value="" name="checkout" placeholder="Select Date">
+                        </div>
+                        <div class="with-form">
+                            <div class="col-lg-12 col-md-12">
+                                <a href="">Guests <span class="qtyTotal" name="qtyTotal">1</span></a>
+                                <div class="panel-dropdown-content">
+                                    <div class="qtyButtons">
+                                        <div class="qtyTitle">Adults</div>
+                                        <input type="text" name="adult" id="adult" value="1">
+                                    </div>
+                                    <div class="qtyButtons">
+                                        <div class="qtyTitle">Childrens</div>
+                                        <input type="text" name="children" id="children" value="1">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        <div class="with-forms margin-top-30">
+                            <div class="col-lg-12 col-md-12">
+                                <a href="#">Select Room Type</a>
+                                <select name="room_type" id="room_type" class="utf_chosen_select_single">
+                                    
+                                    {% for r in hotel.hotel_room_types %}
+                                        <option value="{{r.slug}}">{{r.type}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="utf_progress_button button fullwidth_block margin-top-5">Request
+                            to Book</button>
+                    </form>
                 </div>
-                <a href="listing_booking.html" class="utf_progress_button button fullwidth_block margin-top-5">Request
-                    to Book</a>
                 <button class="like-button add_to_wishlist"><span class="like-icon"></span> Add to Wishlist</button>
                 <div class="clearfix"></div>
             </div>
@@ -492,7 +477,7 @@
                 </ul>
             </div>
             <div class="opening-hours margin-top-35">
-                <div class="utf_coupon_widget" style="background-image: url(images/coupon-bg-1.jpg);">
+                <div class="utf_coupon_widget" style="background-image: url({% static 'images/coupon-bg-1.jpg' %});">
                     <div class="utf_coupon_overlay"></div>
                     <a href="#" class="utf_coupon_top">
                         <h3>Book Now & Get 50% Discount</h3>
@@ -791,3 +776,12 @@
 </section>
 
 {% endblock content %}
+
+
+
+{% block javascript %}
+<script src="{% static 'scripts/datedropper.js' %}"></script>
+<script src="{% static 'scripts/quantityButtons.js' %}"></script>
+<script src="{% static 'scripts/daterangepicker.js' %}"></script>
+{% endblock javascript %}
+    

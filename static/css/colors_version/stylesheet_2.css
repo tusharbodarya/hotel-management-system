@@ -8192,7 +8192,7 @@ section.fullwidth_block .utf_listing_item-container.list-layout{
 }
 .utf_listing_prige_block .utf_meta_listing_price i {
     font-size: 14px;
-    color: #ff2222;
+    color: #ff214f;
     padding-right: 0px;
 	width: 16px;
 	vertical-align:initial;
@@ -8584,7 +8584,7 @@ section.fullwidth_block .utf_listing_item-container.list-layout{
 	bottom:15px;
 }
 span.like-icon {
-	color: #ff2222;
+	color: #ff214f;
 	font-size: 18px;
 	position: absolute;
 	z-index: 101;
@@ -9457,7 +9457,7 @@ a.utf_dashboard_nav_responsive {
 	background-color: #ffbb28;
 }
 .utf_dashboard_navigation ul li span.nav-tag.red {
-	background-color: #ff2222;
+	background-color: #ff214f;
 }
 .utf_dashboard_navigation ul li ul {
 	padding: 0;
@@ -9517,7 +9517,7 @@ a.utf_dashboard_nav_responsive {
 	color: #fff;
 	border-color:#fff;
 	border-bottom:1px solid rgba(255, 255, 255, 0.1);
-	background-color:#ff2222;
+	background-color:#ff214f;
 }
 .utf_dashboard_navigation ul li ul li.active, .utf_dashboard_navigation ul li ul li:hover {
 	border-bottom:0;
@@ -10780,7 +10780,7 @@ input[type="radio"] {
 }
 #utf_countdown div:first-child i { border: none;}
 #utf_countdown span {
-	background-color:#ff2222;
+	background-color:#ff214f;
 	font-size: 38px;
 	color: #fff;
 	width: 135px;
@@ -10957,7 +10957,7 @@ input[type="radio"] {
 	padding-left:10px;
 }
 .utf_listing_cateicon{
-	background: #ff2222;
+	background: #ff214f;
 	width: 36px;
 	height:36px;
 	color: #fff;
@@ -11004,7 +11004,7 @@ input[type="radio"] {
 	transition: all 0.5s ease 0s;
 }
 .utf_listing_categorybox ul li a:hover{
-	color:#ff2222;
+	color:#ff214f;
 	padding-left:5px;
 	-webkit-transition: all .5s ease 0;
 	transition: all .5s ease 0;
@@ -11035,9 +11035,9 @@ input[type="radio"] {
 	vertical-align:middle;
 }
 .listing_tags_section a:hover{
-	background:#ff2222;
+	background:#ff214f;
 	color: #ffffff;
-    border-color: #ff2222 !important;
+    border-color: #ff214f !important;
 }
 .listing_tags_section a:hover i{
 	color: #ffffff;
@@ -17339,7 +17339,7 @@ ul.main_popular_categories_list{
     content: '';
     height: 8px;
     width: 8px;
-    background:#ff2222;
+    background:#ff214f;
     position: absolute;
     border-radius: 100%;
     top:-5px;
@@ -17395,10 +17395,10 @@ ul.main_popular_categories_list{
     padding-bottom: 20px !important;
 }
 .bg-c1.red i {
-    background: #ff2222;
+    background: #ff214f;
 }
 .dashboard_notify_bottom a:hover{
-    color: #ff2222;    
+    color: #ff214f;    
 }
 .dashboard_notify_bottom a {
     color: #666;
@@ -17644,7 +17644,7 @@ a.social_bt {
     border-radius:30px;
 }
 #review_summary, .reviews-container .progress-bar {
-    background-color: #ff2222;
+    background-color: #ff214f;
 }
 .booking_widget_box .select_date_box{
     position:relative
@@ -17713,11 +17713,11 @@ a.social_bt {
 }
 .option-set li a.selected {
     color: #fff;
-    background-color: #ff2222;
+    background-color: #ff214f;
 }
 .option-set li a:hover {
     color:#fff;
-    background-color: #ff2222;
+    background-color: #ff214f;
 }
 .category_container_item_part a .featured {
 	color: #fff;
