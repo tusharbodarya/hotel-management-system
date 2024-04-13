@@ -2,5 +2,178 @@
 {% load static %}
 
 {% block content %}
-    
+<div id="titlebar" class="gradient">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Choose Payment Option</h2>
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li><a href="index_1.html">Home</a></li>
+                        <li>Choose Payment Option</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container margin-bottom-75">
+    <div class="row">
+        <div class="col-lg-8 col-md-8 utf_listing_payment_section">
+            <div class="utf_booking_listing_section_form margin-bottom-40">
+                <h3><i class="fa fa-bed"></i> Selected Rooms</h3>
+                <div class="utf_listing_section">
+                    <div class="utf_pricing_list_section">
+                        <ul>
+                            
+                            {% for r in booking.room.all %}
+                            <li>
+                                <h5>
+                                    Room: {{r.room_type.type}}
+                                    <small>
+                                        <a style="cursor: pointer;" class="delete-item" data-item="{{r.id}}" >
+                                            <i class="fa fa-trash" style="color: red;"></i>
+                                        </a>
+                                    </small>
+                                </h5>
+                                <p><strong>Beds :</strong> {{r.room_type.number_of_beds}}</p>
+                                <p><strong>Room Number :</strong> {{r.room_number}}</p>
+                                <span>${{r.room_type.price}}</span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="utf_booking_listing_section_form margin-bottom-40">
+                <h3><i class="sl sl-icon-paper-plane"></i> Billing Information</h3>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Full Name</label>
+                        <input type="text" name="full_name" value="{{booking.full_name}}" style="background: rgb(227, 227, 227);" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="medium-icons">
+                            <label>E-Mail</label>
+                            <input type="text" name="email" value="{{booking.email}}" style="background: rgb(227, 227, 227);" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="medium-icons">
+                            <label>Phone</label>
+                            <input type="text" name="phone" value="{{booking.phone}}" style="background: rgb(227, 227, 227);" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 margin-top-0 utf_listing_payment_section">
+            <div class="utf_booking_listing_item_container compact utf_order_summary_widget_section">
+                <div class="listing-item"> <img src="{{booking.hotel.image.url}}" alt="">
+                    <div class="utf_listing_item_content">
+                        <h3>{{booking.hotel.name}}</h3>
+                        <span><i class="fa fa-map-marker"></i> {{booking.hotel.address}}</span>
+                        <span><i class="fa fa-phone"></i> {{booking.hotel.mobile}}</span>
+                        <div class="utf_star_rating_section" data-rating="4.5">
+                            <div class="utf_counter_star_rating">(18) Reviews</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="boxed-widget opening-hours summary margin-top-0">
+                <h3><i class="fa fa-calendar-check-o"></i> Booking Summary</h3>
+                <ul>
+                    <li>Check-in <span>{{booking.check_in_date}}</span></li>
+                    <li>Check-out <span>{{booking.check_out_date}}</span></li>
+                    <li>Total Days <span>{{booking.total_days}} Days</span></li>
+                    <li>Adults <span>{{booking.num_adults}} Adults</span></li>
+                    <li>Children <span>{{booking.num_children}} Children</span></li>
+                    <li>V.A.T <span>$0.00</span></li>
+                    <li>Discount <span>-${{booking.saved}}</span></li>
+                    <li class="total-costs">Sub Total <span>${{booking.total}}</span></li>
+                    <li class="total-costs">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="col-md-8">
+                                <input id="couponCode" name="code" placeholder="Have a coupon enter here..." required="" type="text">
+                            </div>
+                            <div class="col-md-4">
+                                <input type="submit" class="coupon_code" value="Apply">
+                            </div>
+                        </form>
+                        <div class="clearfix"></div>
+                    </li>
+                    <li class="total-costs">Total Cost <span>${{booking.total}}</span></li>
+                </ul>
+                <button id="checkout-button" class="button utf_booking_confirmation_button margin-top-10 margin-bottom-10 w-100" style="width: 100%;">
+                    Pay with Stripe <i class="fa fa-credit-card"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="utf_cta_area_item utf_cta_area2_block">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="utf_subscribe_block clearfix">
+                    <div class="col-md-8 col-sm-7">
+                        <div class="section-heading">
+                            <h2 class="utf_sec_title_item utf_sec_title_item2">Subscribe to Newsletter!</h2>
+                            <p class="utf_sec_meta">
+                                Subscribe to get latest updates and information.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-5">
+                        <div class="contact-form-action">
+                            <form method="post">
+                                <span class="la la-envelope-o"></span>
+                                <input class="form-control" type="email" placeholder="Enter your email" required="">
+                                <button class="utf_theme_btn" type="submit">Subscribe</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    var stripe = Stripe('{{stripe_publishable_key}}')
+    var checkoutButton = document.getElementById("checkout-button")
+
+    checkoutButton.addEventListener("click", function() {
+        var email = "{{booking.email}}"
+
+        checkoutButton.innerHTML = "Processing <i class='fa fa-spinner fa-spin'></i>"
+        
+        fetch("/api/create_checkout_session/{{booking.booking_id}}/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email: email
+            })
+        }).then(function(response){
+            console.log(response)
+            return response.json();
+        }).then(function(session){
+            console.log(session)
+            return stripe.redirectToCheckout({
+                sessionId: session.sessionId
+            })
+        }).then(function(result){
+            if(result.error){
+                alert(result.error.message)
+            }
+        }).catch(function(error){
+            console.log("Error: ", error)
+        })
+
+    })
+</script>
 {% endblock content %}

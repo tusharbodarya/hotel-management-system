@@ -36,11 +36,50 @@ $(document).ready(function(){
             dataType: "json",
             beforeSend: function(){
                 console.log("Sending Data to server.......");
+                button.html("<i class='fa fa-spinner fa-spin'></i> Processing")
             },
             success: function(response){
+                $(".room-count").text(response.total_selected_items)
+                button.html("<i class='fa fa-check'></i> Added to Selection")
                 console.log(response)
             }
         })
 
     })
 })
+
+$(document).on("click",".delete-item", function(){
+    let hotel_id = $(this).attr("data-item")
+    let button = $(this)
+
+    $.ajax({
+        url: "/delete_selection/",
+        data: {
+            "hotel_id": hotel_id,
+        },
+        dataType: "json",
+        beforeSend: function(){
+            button.html("<i class='fa fa-spinner fa-spin'></i>")
+        },
+        success: function(response){
+            $(".room-count").text(response.total_selected_item)
+            $(".selection-list").html(response.data)
+        }
+    })
+})
+
+function makeAjaxCall(){
+    $.ajax({
+        url: "/update_room_status/",
+        type: "GET",
+        success: function(data){
+            console.log(data);
+        },
+        error: function(error){
+            console.log(error);
+        }
+    })
+}
+
+// setInterval(makeAjaxCall, 3000);
+setInterval(makeAjaxCall, 86400000);

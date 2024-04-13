@@ -1,0 +1,32 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="not_found_block">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <section id="not-found" class="center">
+                        <h2 class="margin-bottom-10"><i class="fa fa-check-circle" style="color: green;"></i></h2>
+                        <p style="margin-top: 10px; color: black;"><b>Checkout & Payment Successfull!</b></p>
+                        <div class="utf_error_description_part utf_ferror_description">
+                            <span class="f-primary animated v fadeInRight">
+                                We have sent your booking summary to 
+                                <b>{{booking.email}}.</b>
+                                Your Booking Id is <b>{{booking.booking_id}} </b>
+                                Thank you.
+                            </span>
+                        </div>
+                        <a href="#" class="button margin-top-20">Visit Dashboard</a>
+                        <a href="#" class="button margin-top-20">View Invoice </a>
+                        <div class="row">
+                            <div class="col-lg-6 col-lg-offset-3">
+                                <div class="grey-style margin-top-50 margin-bottom-10"></div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

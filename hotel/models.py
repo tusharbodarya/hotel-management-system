@@ -37,6 +37,14 @@ PAYMENT_STATUS = (
     ("Expired", "Expired"),
 )
 
+NOTIFICATION_TYPE = (
+    ("Booking Confirmed", "Booking Confirmed"),
+    ("Booking Cancelled", "Booking Cancelled"),
+    # ("Booking Refund", "Booking Refund"),
+    # ("Staff On Duty", "Staff On Duty"),
+    # ("Staff Off Duty", "Staff Off Duty"),
+)
+
 class Hotel(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=100, null=True, blank=True)
@@ -161,7 +169,7 @@ class Room(models.Model):
 class Booking(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     payment_status = models.CharField(max_length=100, choices=PAYMENT_STATUS)
-    
+    coupons = models.ManyToManyField('hotel.Coupon', blank=True)
     full_name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
@@ -173,8 +181,8 @@ class Booking(models.Model):
     total = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
     saved = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
     
-    ckeck_in_date = models.DateField()
-    ckeck_out_date = models.DateField()
+    check_in_date = models.DateField()
+    check_out_date = models.DateField()
     
     total_days = models.PositiveIntegerField(default=0)
     num_adults = models.PositiveIntegerField(default=1)
@@ -191,7 +199,7 @@ class Booking(models.Model):
     bid = ShortUUIDField(unique=True, length=10, max_length=20)
     date = models.DateTimeField(auto_now_add=True)
     stripe_payment_intent = models.CharField(max_length=200, null=True, blank=True)
-    success_id = models.CharField(max_length=200, null=True, blank=True)
+    success_id = ShortUUIDField(length=10, max_length=20, null=True, blank=True)
     booking_id = ShortUUIDField(unique=True, length=10, max_length=20)
     
     def __str__(self):
@@ -221,3 +229,27 @@ class StaffOnDuty(models.Model):
     
     def __str__(self):
         return f"{self.staff_id}"
+    
+class Coupon(models.Model):
+    code = models.CharField(max_length=100)
+    type = models.CharField(max_length=100, default="Percentage")
+    discount = models.IntegerField(default=1)
+    redemptions = models.IntegerField(default=0)
+    date = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(default=True)
+    valid_from = models.DateTimeField()
+    valid_to = models.DateTimeField()
+    cid = ShortUUIDField(unique=True, length=10, max_length=20)
+    
+    def __str__(self):
+        return f"{self.code}"
+
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    booking = models.ForeignKey(Booking, on_delete=models.SET_NULL, null=True, blank=True)
+    type = models.CharField(max_length=100, choices=NOTIFICATION_TYPE)
+    seen = models.BooleanField(default=False)
+    date = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"{self.user.username} - {self.booking.booking_id}"

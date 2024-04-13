@@ -3,6 +3,8 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from hotel.models import Hotel, Booking, ActivityLog, StaffOnDuty, Room, RoomType
+from datetime import datetime
+from  django.template.loader import render_to_string
 
 @csrf_exempt
 def check_room_availability(request):
@@ -60,3 +62,62 @@ def add_to_selection(request):
     
     return JsonResponse(data)
     
+def delete_selection(request):
+    hotel_id = str(request.GET['hotel_id'])
+    if 'selection_data_obj' in request.session:
+        if hotel_id in request.session['selection_data_obj']:
+            selection_data = request.session['selection_data_obj']
+            del request.session['selection_data_obj'][hotel_id]
+            request.session['selection_data_obj'] = selection_data
+            
+    total = 0
+    room_count = 0
+    total_days = 0
+    adult = 0
+    children = 0
+    checkin = ""
+    checkout = ""
+    hotel = None
+    
+    if 'selection_data_obj' in request.session:
+        for h_id, item in request.session["selection_data_obj"].items():
+            hotel_id = int(item["hotel_id"])
+            room_id = int(item["room_id"])
+            room_type_id = int(item["room_type_id"])
+            checkin = item["checkin"]
+            checkout = item["checkout"]
+            adult = int(item["adult"])
+            children = int(item["children"])
+            
+            room_type = RoomType.objects.get(id=room_type_id)
+            
+            date_format = "%Y-%m-%d"
+            checkin_date = datetime.strptime(checkin, date_format)
+            checkout_date = datetime.strptime(checkout, date_format)
+            time_diffrence = checkout_date - checkin_date
+            total_days = time_diffrence.days
+            
+            room_count += 1
+            days = total_days
+            price =room_type.price
+            
+            room_price = price * room_count
+            total = room_price * days
+            
+            hotel = Hotel.objects.get(id=hotel_id)
+    context = render_to_string(
+        "hotel/async/selected_rooms.html",
+            {
+                "data": request.session['selection_data_obj'],
+                "total_selected_item": len(request.session['selection_data_obj']),
+                "total": total,
+                "total_days": total_days,
+                "adult": adult,
+                "children": children,
+                "checkin": checkin,
+                "checkout": checkout,
+                "hotel": hotel,
+                "room_count": room_count,
+            }
+        )
+    return JsonResponse({"data": context, "total_selected_item": len(request.session['selection_data_obj'])})

@@ -1,0 +1,193 @@
+{% extends 'partials/dashboard_base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="utf_dashboard_content">
+    <div id="titlebar" class="dashboard_gradient">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Bookings</h2>
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li><a href="index_1.html">Home</a></li>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li>Bookings</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 col-md-6">
+            <div class="utf_dashboard_list_box margin-top-0">
+                <h4>Bookings Id: #{{booking.booking_id}}</h4>
+                <ul>
+                    <li class="utf_approved_booking_listing">
+                        <div class="utf_list_box_listing_item bookings">
+                            <div class="utf_list_box_listing_item_content">
+                                <div class="inner">
+                                    <h3>{{booking.full_name|title}} <span class="utf_booking_listing_status">{{booking.payment_status|title}}</span></h3>
+                                    <div class="utf_inner_booking_listing_list">
+                                        <h5>Hotel Nane:-</h5>
+                                        <ul class="utf_booking_listing_list">
+                                            <li>{{booking.hotel.name}}</li>
+                                        </ul>
+                                    </div>
+                                    <div class="utf_inner_booking_listing_list">
+                                        <h5>Hotel Address:-</h5>
+                                        <ul class="utf_booking_listing_list">
+                                            <li class="highlighted">{{booking.hotel.address}}</li>
+                                        </ul>
+                                    </div>
+                                    <div class="utf_inner_booking_listing_list">
+                                        <h5>Hotel Email:-</h5>
+                                        <ul class="utf_booking_listing_list">
+                                            <li class="highlighted">{{booking.hotel.email}}</li>
+                                        </ul>
+                                    </div>
+                                    <div class="utf_inner_booking_listing_list">
+                                        <h5>Hotel Phone:-</h5>
+                                        <ul class="utf_booking_listing_list">
+                                            <li class="highlighted">{{booking.hotel.mobile}}</li>
+                                        </ul>
+                                    </div>
+                                    <hr/>
+                                    <div class="utf_inner_booking_listing_list">
+                                        <h5>Checkin Date:-</h5>
+                                        <ul class="utf_booking_listing_list">
+                                            <li class="highlighted">{{booking.check_in_date}}</li>
+                                        </ul>
+                                    </div>
+                                    <div class="utf_inner_booking_listing_list">
+                                        <h5>Checkout Date:-</h5>
+                                        <ul class="utf_booking_listing_list">
+                                            <li class="highlighted">{{booking.check_out_date}}</li>
+                                        </ul>
+                                    </div>
+                                    <div class="utf_inner_booking_listing_list">
+                                        <h5>Total Days:-</h5>
+                                        <ul class="utf_booking_listing_list">
+                                            <li class="highlighted">{{booking.total_days}}</li>
+                                        </ul>
+                                    </div>
+                                    <div class="utf_inner_booking_listing_list">
+                                        <h5>Adults:-</h5>
+                                        <ul class="utf_booking_listing_list">
+                                            <li class="highlighted">{{booking.num_adults}} Adult</li>
+                                        </ul>
+                                    </div>
+                                    <div class="utf_inner_booking_listing_list">
+                                        <h5>Children:-</h5>
+                                        <ul class="utf_booking_listing_list">
+                                            <li class="highlighted">{{booking.num_children}} Children</li>
+                                        </ul>
+                                    </div>
+                                    <hr/>
+                                    <div class="utf_inner_booking_listing_list">
+                                        <h5>Full Name:-</h5>
+                                        <ul class="utf_booking_listing_list">
+                                            <li class="highlighted">{{booking.full_name}}</li>
+                                        </ul>
+                                    </div>
+                                    <div class="utf_inner_booking_listing_list">
+                                        <h5>Email Address:-</h5>
+                                        <ul class="utf_booking_listing_list">
+                                            <li class="highlighted">{{booking.email}}</li>
+                                        </ul>
+                                    </div>
+                                    <div class="utf_inner_booking_listing_list">
+                                        <h5>Phone Number:-</h5>
+                                        <ul class="utf_booking_listing_list">
+                                            <li class="highlighted">{{booking.phone}}</li>
+                                        </ul>
+                                    </div>
+                                    <hr/>
+                                    <div class="utf_inner_booking_listing_list">
+                                        <h5>Price:-</h5>
+                                        <ul class="utf_booking_listing_list">
+                                            <li class="highlighted">{{booking.total}}</li>
+                                        </ul>
+                                    </div>
+                                    <hr/>
+                                    <div class="utf_inner_booking_listing_list">
+                                        <h5>Date Booked:-</h5>
+                                        <ul class="utf_booking_listing_list">
+                                            <li class="highlighted">{{booking.date}}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="buttons-to-right"> <a href="#" class="button gray reject"><i
+                            class="sl sl-icon-close"></i> Invoice</a> </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6">
+            <div class="utf_dashboard_list_box margin-top-0">
+                <h4>Booked Rooms {{booking.room.all.count}}</h4>
+                <ul>
+                    <li class="utf_approved_booking_listing">
+                        <div class="utf_list_box_listing_item bookings">
+                            <div class="utf_list_box_listing_item_content">
+                                <div class="inner">
+                                    <h3>Francis Burton <span class="utf_booking_listing_status">Approved</span></h3>
+                                    <div class="utf_inner_booking_listing_list">
+                                        <h5>Booking Item:-</h5>
+                                        <ul class="utf_booking_listing_list">
+                                            <li>The Hot and More Restaurant</li>
+                                        </ul>
+                                    </div>
+                                    <div class="utf_inner_booking_listing_list">
+                                        <h5>Start Date:-</h5>
+                                        <ul class="utf_booking_listing_list">
+                                            <li class="highlighted">18 November 2022 at 12:00 am</li>
+                                        </ul>
+                                    </div>
+                                    <div class="utf_inner_booking_listing_list">
+                                        <h5>End Date:-</h5>
+                                        <ul class="utf_booking_listing_list">
+                                            <li class="highlighted">19 November 2022 at 12:00 pm</li>
+                                        </ul>
+                                    </div>
+                                    <div class="utf_inner_booking_listing_list">
+                                        <h5>Booking Details:-</h5>
+                                        <ul class="utf_booking_listing_list">
+                                            <li class="highlighted">2 Adults, 2 Children</li>
+                                        </ul>
+                                    </div>
+                                    <div class="utf_inner_booking_listing_list">
+                                        <h5>Email Address:-</h5>
+                                        <ul class="utf_booking_listing_list">
+                                            <li class="highlighted">info@example.com</li>
+                                        </ul>
+                                    </div>
+                                    <div class="utf_inner_booking_listing_list">
+                                        <h5>Phone Number:-</h5>
+                                        <ul class="utf_booking_listing_list">
+                                            <li class="highlighted">+(012) 1123-254-456</li>
+                                        </ul>
+                                    </div>
+                                    <div class="utf_inner_booking_listing_list">
+                                        <h5>Price:-</h5>
+                                        <ul class="utf_booking_listing_list">
+                                            <li class="highlighted">$ 249</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="buttons-to-right"> <a href="#" class="button gray reject"><i
+                                    class="sl sl-icon-close"></i> Cancel</a> </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="footer_copyright_part">Copyright © 2022 All Rights Reserved.</div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
