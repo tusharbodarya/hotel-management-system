@@ -1,0 +1,81 @@
+{% extends 'partials/dashboard_base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="utf_dashboard_content">
+    <div id="titlebar" class="dashboard_gradient">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>My Listings</h2>
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li><a href="index_1.html">Home</a></li>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li>My Listings</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="utf_dashboard_list_box margin-top-0">
+                <div class="sort-by my_sort_by">
+                    <div class="utf_sort_by_select_item">
+                        <select data-placeholder="Default Listing" class="utf_chosen_select_single">
+                            <option>Default Listing</option>
+                            <option>Active Listing</option>
+                            <option>Pending Listing</option>
+                            <option>Expired Listing</option>
+                        </select>
+                    </div>
+                </div>
+                <h4><i class="sl sl-icon-list"></i> My Listings</h4>
+                <ul>
+
+                    {% for b in bookings %}
+                    <li>
+                        <div class="utf_list_box_listing_item">
+                            <div class="utf_list_box_listing_item-img"><a href="#"><img
+                                        src="{{b.hotel.image.url}}" alt=""></a></div>
+                            <div class="utf_list_box_listing_item_content">
+                                <div class="inner">
+                                    <h3>{{b.full_name|title}}
+                                        <div class="utf_counter_star_rating">{{b.payment_status|title}}</div>
+                                    </h3>
+                                    <span><i class="im im-icon-Hotel"></i> <b>Hotel Name:</b> {{b.hotel.name}}</span>
+                                    <span><i class="fa fa-calendar-check-o"></i> <b>Checkin Date:</b> {{b.check_in_date}}</span>
+                                    <span><i class="fa fa-calendar-times-o"></i> <b>Checkout Date:</b> {{b.check_out_date}}</span>
+                                    <span><i class="fa fa-calendar"></i> <b>Total Days:</b> {{b.total_days}} Days</span>
+                                    <span><i class="fa fa-user"></i> <b>Adults:</b> {{b.num_adults}} Adults</span>
+                                    <span><i class="fa fa-child"></i> <b>Childrens:</b> {{b.num_children}} Childrens</span>
+                                    <span><i class="fa fa-dollar"></i> <b>Price:</b> ${{b.total}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="buttons-to-right"> 
+                            <a href="{% url 'user_dashboard:booking_detail' b.booking_id %}" class="button gray"><i class="fa fa-eye"></i> View Booking Detail</a> 
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+            <div class="utf_pagination_container_part margin-top-30 margin-bottom-30">
+                <nav class="pagination">
+                    <ul>
+                        <li><a href="#"><i class="sl sl-icon-arrow-left"></i></a></li>
+                        <li><a href="#" class="current-page">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>pencil
+        <div class="col-md-12">
+            <div class="footer_copyright_part">Copyright © 2022 All Rights Reserved.</div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

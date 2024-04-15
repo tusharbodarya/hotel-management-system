@@ -10679,7 +10679,6 @@ input[type="radio"] {
 .utf_dashboard_list_box .utf_list_box_listing_item_content .inner span {
 	display:block;
 	margin:2px;
-	vertical-align: sub;
 	color:#808080;
 }
 .utf_dashboard_list_box .utf_list_box_listing_item_content .inner span i {
@@ -10689,7 +10688,7 @@ input[type="radio"] {
 	width: 18px;
 	display: inline-block;
 	text-align: center;
-	vertical-align: sub;
+	vertical-align: initial;
 }
 .utf_list_box_listing_item_content .inner .numerical-rating, .utf_list_box_listing_item_content .inner .utf_star_rating_section {
 	margin: 5px 0 0 0;

@@ -1,0 +1,31 @@
+{% extends 'partials/dashboard_base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="utf_dashboard_content">
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="utf_dashboard_list_box margin-top-0">
+                <div class="sort-by my_sort_by">
+                    <div class="utf_sort_by_select_item">
+                    </div>
+                </div>
+                <h4 class="noti-text">Notifications</h4>
+                <ul>
+
+                    {% for n in notifications %}
+                    <li class="noti-div-123435">
+                        <i class="fa fa-bell"></i>
+                        {% if n.type == "Booking Confirmed" %}
+                            Your Booking (#<b>{{ n.booking.booking_id }}</b>) has been placed successfully. <a href="{% url 'user_dashboard:notification_mark_as_seen' n.id %}" class="close-list-item"><i class="fa fa-close"></i> </a>
+                        {% else %}
+                            Your Booking (#<b>{{ n.booking.booking_id }}</b>) has been cancelled successfully. <a href="{% url 'user_dashboard:notification_mark_as_seen' n.id %}" class="close-list-item"><i class="fa fa-close"></i> </a>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
