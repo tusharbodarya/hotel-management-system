@@ -81,5 +81,47 @@ function makeAjaxCall(){
     })
 }
 
-// setInterval(makeAjaxCall, 3000);
-setInterval(makeAjaxCall, 86400000);
+setInterval(makeAjaxCall, 3000);
+// setInterval(makeAjaxCall, 86400000);
+
+$(document).on("click","#add-to-bookmark", function(){
+    let button = $(this)
+    let id = button.attr('data-hotel')
+
+    $.ajax({
+        url: "/dashboard/add_to_bookmark/",
+        data: {
+            "id": id,
+        },
+        dataType: "json",
+        beforeSend: function(){
+            button.html("<i class='fa fa-spinner fa-spin'></i> Processing")
+        },
+        success: function(response){
+            if(response.data == "Bookmark Deleted"){
+                button.html("<i class='fa fa-heart' style='color: gray'></i>")
+            }else{
+                button.html("<i class='fa fa-heart' style='color: red'></i>")
+            }
+            if(response.icon == "warning"){
+                alert("Login To Bookmark Hotel")
+            }
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 9000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: response.icon,
+                title: response.data
+            });
+            console.log(response)
+        }
+    })
+})

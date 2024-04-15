@@ -45,7 +45,7 @@
             <div id="header">
                 <div class="container">
                     <div class="utf_left_side">
-                        <div id="logo"> <a href="index_1.html"><img src="{% static 'images/logo.png' %}" alt=""></a>
+                        <div id="logo"> <a href="/"><img src="{% static 'images/logo.png' %}" alt=""></a>
                         </div>
                         <div class="mmenu-trigger">
                             <button class="hamburger utfbutton_collapse" type="button">
@@ -58,7 +58,7 @@
                             <ul id="responsive">
                                 <li><a class="current" href="/">Home</a></li>
                                 <li><a href="#">Listings</a></li>
-                                <li><a href="#">Dashboard</a></li>
+                                <li><a href="{% url 'user_dashboard:dashboard' %}">Dashboard</a></li>
                                 <li><a href="#">Blog</a></li>
                             </ul>
                         </nav>

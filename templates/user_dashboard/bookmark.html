@@ -1,0 +1,65 @@
+{% extends 'partials/dashboard_base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="utf_dashboard_content">
+    <div id="titlebar" class="dashboard_gradient">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Bookmark</h2>
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li>Bookmark</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="utf_dashboard_list_box margin-top-0">
+                <h4><i class="sl sl-icon-heart"></i> All Bookmarked Listings</h4>
+                <ul>
+                    {% for b in bookmark %}
+                    <li>
+                        <div class="utf_list_box_listing_item">
+                            <div class="utf_list_box_listing_item-img">
+                                <a href="#"><img src="{{b.hotel.image.url}}" alt=""></a>
+                            </div>
+                            <div class="utf_list_box_listing_item_content">
+                                <div class="inner">
+                                    <h3>{{b.hotel.name}}</h3>
+                                    <span><i class="fa fa-map-marker"></i> {{b.hotel.address}}</span>
+                                    <span><i class="fa fa-phone"></i> {{b.hotel.mobile}}</span>
+                                    <span><i class="fa fa-envelope"></i> {{b.hotel.email}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="buttons-to-right"> <a href="{% url 'user_dashboard:delete_bookmark' b.bid %}" class="button gray"><i class="sl sl-icon-close"></i>
+                                Delete</a> </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+            <div class="utf_pagination_container_part margin-top-30 margin-bottom-30">
+                <nav class="pagination">
+                    <ul>
+                        <li><a href="#"><i class="sl sl-icon-arrow-left"></i></a></li>
+                        <li><a href="#" class="current-page">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="footer_copyright_part">© 2017 U-Listing HTML Template. All Rights Reserved.</div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

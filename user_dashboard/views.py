@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.db import models
-from hotel.models import Hotel, Booking, ActivityLog, StaffOnDuty, Room, RoomType, HotelGallery, Coupon, Notification
+from hotel.models import Hotel, Booking, ActivityLog, StaffOnDuty, Room, RoomType, HotelGallery, Coupon, Notification, Bookmark
+from userauths.models import Profile
 from django.contrib import messages
-
+from django.http import JsonResponse
+from userauths.forms import UserUpdateForm, ProfileUpdateFrom
 @login_required
 def dashboard(request):
     booking = Booking.objects.filter(user=request.user, payment_status="Paid")
@@ -67,3 +69,64 @@ def wallet(request):
     }
     
     return render(request, "user_dashboard/wallet.html", context)
+
+@login_required
+def bookmark(request):
+    bookmark = Bookmark.objects.filter(user=request.user)
+    context = {
+        "bookmark": bookmark,
+    }
+    
+    return render(request, "user_dashboard/bookmark.html", context)
+
+def delete_bookmark(request, bid):
+    bookmark = Bookmark.objects.get(bid=bid)
+    bookmark.delete()
+    messages.success(request, "Bookmark deleted")
+    return redirect("user_dashboard:bookmark")
+
+def add_to_bookmark(request):
+    id = request.GET.get("id")
+    hotel = Hotel.objects.get(id=id)
+    if request.user.is_authenticated:
+        bookmark = Bookmark.objects.filter(user=request.user, hotel=hotel)
+        if bookmark.exists():
+            bookmark = Bookmark.objects.filter(user=request.user, hotel=hotel)
+            bookmark.delete()
+            return JsonResponse({"data": "Bookmark Deleted", "icon": "success"})
+        else:
+            Bookmark.objects.create(
+                user=request.user,
+                hotel=hotel
+            )
+            return JsonResponse({"data": "Hotel Bookmarked", "icon": "success"})
+    else:
+        return JsonResponse({"data": "Please Login To Bookmark Hotel", "icon": "warning"})
+    
+@login_required
+def profile(request):
+    profile = Profile.objects.get(user=request.user)
+    
+    if request.method == "POST":
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        p_form = ProfileUpdateFrom(request.POST, request.FILES, instance=request.user.profile)
+        
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request, "Profile updated")
+            return redirect("user_dashboard:profile")
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfileUpdateFrom(instance=request.user.profile)
+    context = {
+        'profile': profile,
+        'u_form': u_form,
+        'p_form': p_form,
+    }
+    
+    return render(request, "user_dashboard/profile.html", context)
+
+@login_required
+def password_changed(request):
+    return render(request, "user_dashboard/password-reset/password-changed.html")

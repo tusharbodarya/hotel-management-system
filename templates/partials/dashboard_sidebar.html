@@ -5,10 +5,10 @@
             <li><a href="{% url 'user_dashboard:bookings' %}"><i class="sl sl-icon-check"></i> All Bookings</a></li>
             <li><a href="{% url 'user_dashboard:notifications' %}"><i class="sl sl-icon-bell"></i> Notification</a></li>
             <li><a href="{% url 'user_dashboard:wallet' %}"><i class="sl sl-icon-wallet"></i> Wallet</a></li>
-            <li><a href="dashboard_bookmark.html"><i class="sl sl-icon-heart"></i> Bookmark</a></li>
-            <li><a href="dashboard_my_profile.html"><i class="sl sl-icon-user"></i> My Profile</a></li>
-            <li><a href="dashboard_change_password.html"><i class="sl sl-icon-key"></i> Change Password</a></li>
-            <li><a href="index_1.html"><i class="sl sl-icon-power"></i> Logout</a></li>
+            <li><a href="{% url 'user_dashboard:bookmark' %}"><i class="sl sl-icon-heart"></i> Bookmark</a></li>
+            <li><a href="{% url 'user_dashboard:profile' %}"><i class="sl sl-icon-user"></i> My Profile</a></li>
+            <li><a href="{% url 'user_dashboard:change_password' %}"><i class="sl sl-icon-key"></i> Change Password</a></li>
+            <li><a href="{% url 'userauths:sign-out' %}"><i class="sl sl-icon-power"></i> Logout</a></li>
         </ul>
     </div>
 </div>

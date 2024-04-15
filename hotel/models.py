@@ -45,6 +45,10 @@ NOTIFICATION_TYPE = (
     # ("Staff Off Duty", "Staff Off Duty"),
 )
 
+RATING = (
+    (1, 1),
+)
+
 class Hotel(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=100, null=True, blank=True)
@@ -253,3 +257,20 @@ class Notification(models.Model):
     
     def __str__(self):
         return f"{self.user.username} - {self.booking.booking_id}"
+
+class Bookmark(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    hotel = models.ForeignKey(Hotel, on_delete=models.SET_NULL, null=True, blank=True)
+    bid = ShortUUIDField(unique=True, length=10, max_length=20)
+    date =  models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"{self.user.username} - {self.hotel.name} - {self.bid}"
+    
+class Review(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    hotel = models.ForeignKey(Hotel, on_delete=models.SET_NULL, null=True, blank=True)
+    review = models.TextField(null=True, blank=True)
+    reply = models.TextField(null=True, blank=True)
+    rating = models.PositiveIntegerField(default=None, choices=RATING)
+    

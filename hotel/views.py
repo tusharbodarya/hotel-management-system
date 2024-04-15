@@ -5,7 +5,7 @@ from django.conf import settings
 from django.urls import reverse
 from django.http import JsonResponse, HttpResponse
 
-from hotel.models import Hotel, Booking, ActivityLog, StaffOnDuty, Room, RoomType, Coupon, Notification
+from hotel.models import Hotel, Booking, ActivityLog, StaffOnDuty, Room, RoomType, Coupon, Notification, Bookmark
 from datetime import datetime
 from django.utils import timezone
 from decimal import Decimal
@@ -20,8 +20,12 @@ def index(request):
 
 def hotel_detail(request, slug):
     hotel = Hotel.objects.get(status="Live", slug=slug)
+    
+    if request.user.is_authenticated:
+        bookmark = Bookmark.objects.filter(user=request.user, hotel=hotel)
     context = {
         "hotel": hotel,
+        "bookmark": bookmark,
     }
     return render(request, 'hotel/hotel_detail.html', context)
 
