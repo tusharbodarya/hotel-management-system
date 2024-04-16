@@ -27,7 +27,7 @@
                     <span class="call_now"><i class="sl sl-icon-phone"></i> {{hotel.mobile}}</span>
                     <span class="call_now"><i class="fa fa-envelope-o"></i> {{hotel.email}}</span>
                     <div class="utf_star_rating_section" data-rating="4.5">
-                        <div class="utf_counter_star_rating">(4.5) / (14 Reviews)</div>
+                        <div class="utf_counter_star_rating">({{hotel.average_rating}}/5.0) - ({{hotel.rating_count}} Reviews)</div>
                     </div>
                     <ul class="listing_item_social">
 
@@ -39,7 +39,27 @@
                                     id="add-to-bookmark"><i class="fa fa-heart" style="color: grey;"></i> </a></li>
                         {% endif %}
 
-                        <li><a href="#"><i class="fa fa-star"></i> Add Review</a></li>
+                        
+                        {% if not reviews %}    
+                            <li><a href="#small-dialog" class="popup-with-zoom-anim" id="add-review-button"><i class="fa fa-star"></i> Add Review</a></li>
+                            <div class="zoom-anim-dialog mfp-hide" id="small-dialog">
+                                <div class="small_dialog_header">
+                                    <h3 class="">write a review</h3>
+                                </div>
+                                <div class="utf_message_reply_block margin-top-0" id="review-div">
+                                    <textarea name="review_input" id="review_input" cols="40" rows="3" placeholder="Write Your Review......."></textarea>
+                                    <select name="rating_input" id="rating_input">
+                                        <option value="1">★☆☆☆☆</option>
+                                        <option value="2">★★☆☆☆</option>
+                                        <option value="3">★★★☆☆</option>
+                                        <option value="4">★★★★☆</option>
+                                        <option value="5">★★★★★</option>
+                                    </select>
+                                    <button data-hotel="{{hotel.id}}" class="button" id="review-btn">Reply Message</button>
+                                </div>
+                            </div>
+                        {% endif %}
+
                         <li><a href="#"><i class="fa fa-flag"></i> Featured</a></li>
                         <li><a href="#"><i class="fa fa-share"></i> Share</a></li>
                         <li><a href="#" class="now_open">Open Now</a></li>
@@ -114,40 +134,6 @@
                 </ul>
             </div>
 
-            <div id="utf_listing_video" class="utf_listing_section">
-                <h3 class="utf_listing_headline_part margin-top-50 margin-bottom-40">Villa Videos</h3>
-                <div class="detail-video">
-                    <iframe width="835" height="420" src="https://www.youtube.com/embed/9o9TIwHtOJU"
-                        allowfullscreen></iframe>
-                </div>
-            </div>
-
-            <div id="utf_listing_faq" class="utf_listing_section">
-                <h3 class="utf_listing_headline_part margin-top-50 margin-bottom-40">Listing FAQ's</h3>
-                <div class="style-2">
-                    <div class="accordion">
-                        <h3><span class="ui-accordion-header-icon ui-icon ui-accordion-icon"></span><i
-                                class="sl sl-icon-plus"></i> (1) How to Open an Account?</h3>
-                        <div>
-                            <p>Lorem Ipsum is simply dummy text of the printing and type setting industry. Lorem Ipsum
-                                is simply dummy text of the printing and type setting industry.</p>
-                        </div>
-                        <h3><span class="ui-accordion-header-icon ui-icon ui-accordion-icon"></span><i
-                                class="sl sl-icon-plus"></i> (2) How to Add Listing?</h3>
-                        <div>
-                            <p>Lorem Ipsum is simply dummy text of the printing and type setting industry. Lorem Ipsum
-                                is simply dummy text of the printing and type setting industry.</p>
-                        </div>
-                        <h3><span class="ui-accordion-header-icon ui-icon ui-accordion-icon"></span><i
-                                class="sl sl-icon-plus"></i> (3) What is Featured Listing?</h3>
-                        <div>
-                            <p>Lorem Ipsum is simply dummy text of the printing and type setting industry. Lorem Ipsum
-                                is simply dummy text of the printing and type setting industry.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <div id="utf_listing_location" class="utf_listing_section">
                 <h3 class="utf_listing_headline_part margin-top-60 margin-bottom-40">Location</h3>
                 <div id="utf_single_listing_map_block">
@@ -157,226 +143,37 @@
                 </div>
             </div>
             <div id="utf_listing_reviews" class="utf_listing_section">
-                <h3 class="utf_listing_headline_part margin-top-75 margin-bottom-20">Reviews <span>(08)</span></h3>
+                <h3 class="utf_listing_headline_part margin-top-75 margin-bottom-20">Reviews <span>({{hotel.rating_count}})</span></h3>
                 <div class="clearfix"></div>
                 <div class="reviews-container">
                     <div class="row">
-                        <div class="col-lg-3">
+                        <div class="col-lg-12">
                             <div id="review_summary">
-                                <strong>4.5</strong>
+                                <strong>{{hotel.average_rating}}</strong>
                                 <em>Superb Reviews</em>
-                                <small>Out of 15 Reviews</small>
-                            </div>
-                        </div>
-                        <div class="col-lg-9">
-                            <div class="row">
-                                <div class="col-lg-2 review_progres_title"><small><strong>Quality</strong></small></div>
-                                <div class="col-lg-9">
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: 95%"
-                                            aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-1 review_progres_title"><small><strong>77</strong></small></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-2 review_progres_title"><small><strong>Space</strong></small></div>
-                                <div class="col-lg-9">
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: 90%"
-                                            aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-1 review_progres_title"><small><strong>15</strong></small></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-2 review_progres_title"><small><strong>Price</strong></small></div>
-                                <div class="col-lg-9">
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: 70%"
-                                            aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-1 review_progres_title"><small><strong>18</strong></small></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-2 review_progres_title"><small><strong>Service</strong></small></div>
-                                <div class="col-lg-9">
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: 40%"
-                                            aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-1 review_progres_title"><small><strong>10</strong></small></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-2 review_progres_title"><small><strong>Location</strong></small>
-                                </div>
-                                <div class="col-lg-9">
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: 20%"
-                                            aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-1 review_progres_title"><small><strong>05</strong></small></div>
+                                <small>Out of {{hotel.rating_count}} Reviews</small>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="comments utf_listing_reviews">
                     <ul>
+                        
+                        {% for r in all_review %}    
                         <li>
-                            <div class="avatar"><img src="{% static 'images/client-avatar1.jpg' %}" alt="" /></div>
+                            <div class="avatar"><img src="{{r.user.profile.image.url}}" alt="" /></div>
                             <div class="utf_comment_content">
                                 <div class="utf_arrow_comment"></div>
-                                <div class="utf_star_rating_section" data-rating="5"></div>
-                                <a href="#" class="rate-review">Helpful Review <i class="fa fa-thumbs-up"></i></a>
-                                <div class="utf_by_comment">Francis Burton<span class="date"><i
-                                            class="fa fa-clock-o"></i> Jan 05, 2022 - 8:52 am</span> </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque.
-                                    Nulla finibus lobortis pulvinar. Donec a consectetur nulla. Nulla posuere sapien
-                                    vitae lectus suscipit, et pulvinar nisi tincidunt. Aliquam erat volutpat.</p>
+                                <div class="utf_star_rating_section" data-rating="{{r.rating}}"></div>
+                                <div class="utf_by_comment">{{r.user.profile.full_name}}<span class="date"><i
+                                            class="fa fa-clock-o"></i> {{r.date}}</span> </div>
+                                <p>{{r.review}}</p>
                             </div>
                         </li>
-                        <li>
-                            <div class="avatar"><img src="{% static 'images/client-avatar2.jpg' %}" alt="" /> </div>
-                            <div class="utf_comment_content">
-                                <div class="utf_arrow_comment"></div>
-                                <div class="utf_star_rating_section" data-rating="4"></div>
-                                <a href="#" class="rate-review">Helpful Review <i class="fa fa-thumbs-up"></i></a>
-                                <div class="utf_by_comment">Francis Burton<span class="date"><i
-                                            class="fa fa-clock-o"></i> Jan 05, 2022 - 8:52 am</span> </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque.
-                                    Nulla finibus lobortis pulvinar. Donec a consectetur nulla. Nulla posuere sapien
-                                    vitae lectus suscipit, et pulvinar nisi tincidunt. Aliquam erat volutpat.</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="avatar"><img src="{% static 'images/client-avatar3.jpg' %}" alt="" /> </div>
-                            <div class="utf_comment_content">
-                                <div class="utf_arrow_comment"></div>
-                                <div class="utf_star_rating_section" data-rating="4"></div>
-                                <div class="utf_by_comment">Francis Burton<span class="date"><i
-                                            class="fa fa-clock-o"></i> Jan 05, 2022 - 8:52 am</span> </div>
-                                <a href="#" class="rate-review">Helpful Review <i class="fa fa-thumbs-up"></i></a>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque.
-                                    Nulla finibus lobortis pulvinar. Donec a consectetur nulla. Nulla posuere sapien
-                                    vitae lectus suscipit, et pulvinar nisi tincidunt. Aliquam erat volutpat.</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="avatar"><img src="{% static 'images/client-avatar1.jpg' %}" alt="" /></div>
-                            <div class="utf_comment_content">
-                                <div class="utf_arrow_comment"></div>
-                                <div class="utf_star_rating_section" data-rating="4.5"></div>
-                                <div class="utf_by_comment">Francis Burton<span class="date"><i
-                                            class="fa fa-clock-o"></i> Jan 05, 2022 - 8:52 am</span> </div>
-                                <a href="#" class="rate-review">Helpful Review <i class="fa fa-thumbs-up"></i></a>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque.
-                                    Nulla finibus lobortis pulvinar. Donec a consectetur nulla. Nulla posuere sapien
-                                    vitae lectus suscipit, et pulvinar nisi tincidunt. Aliquam erat volutpat.</p>
-                                <div class="review-images utf_gallery_container">
-                                    <a href="images/review-image-01.jpg" class="utf_gallery"><img
-                                            src="{% static 'images/review-image-01.jpg' %}" alt=""></a>
-                                    <a href="images/review-image-02.jpg" class="utf_gallery"><img
-                                            src="{% static 'images/review-image-02.jpg' %}" alt=""></a>
-                                    <a href="images/review-image-03.jpg" class="utf_gallery"><img
-                                            src="{% static 'images/review-image-03.jpg' %}" alt=""></a>
-                                    <a href="images/review-image-01.jpg" class="utf_gallery"><img
-                                            src="{% static 'images/review-image-01.jpg' %}" alt=""></a>
-                                    <a href="images/review-image-02.jpg" class="utf_gallery"><img
-                                            src="{% static 'images/review-image-02.jpg' %}" alt=""></a>
-                                    <a href="images/review-image-03.jpg" class="utf_gallery"><img
-                                            src="{% static 'images/review-image-03.jpg' %}" alt=""></a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="avatar"><img src="{% static 'images/client-avatar3.jpg' %}" alt="" /> </div>
-                            <div class="utf_comment_content">
-                                <div class="utf_arrow_comment"></div>
-                                <div class="utf_star_rating_section" data-rating="4"></div>
-                                <div class="utf_by_comment">Francis Burton<span class="date"><i
-                                            class="fa fa-clock-o"></i> Jan 05, 2022 / 8:52 am</span> </div>
-                                <a href="#" class="rate-review">Helpful Review <i class="fa fa-thumbs-up"></i></a>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque.
-                                    Nulla finibus lobortis pulvinar. Donec a consectetur nulla. Nulla posuere sapien
-                                    vitae lectus suscipit, et pulvinar nisi tincidunt. Aliquam erat volutpat.</p>
-                            </div>
-                        </li>
+                        {% endfor %}
                     </ul>
                 </div>
                 <div class="clearfix"></div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="utf_pagination_container_part margin-top-30">
-                            <nav class="pagination">
-                                <ul>
-                                    <li><a href="#"><i class="sl sl-icon-arrow-left"></i></a></li>
-                                    <li><a href="#" class="current-page">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-            <div id="utf_add_review" class="utf_add_review-box">
-                <h3 class="utf_listing_headline_part margin-bottom-20">Add Your Review</h3>
-                <span class="utf_leave_rating_title">Your email address will not be published.</span>
-                <div class="row">
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                        <div class="clearfix"></div>
-                        <div class="utf_leave_rating margin-bottom-30">
-                            <input type="radio" name="rating" id="rating-1" value="1" />
-                            <label for="rating-1" class="fa fa-star"></label>
-                            <input type="radio" name="rating" id="rating-2" value="2" />
-                            <label for="rating-2" class="fa fa-star"></label>
-                            <input type="radio" name="rating" id="rating-3" value="3" />
-                            <label for="rating-3" class="fa fa-star"></label>
-                            <input type="radio" name="rating" id="rating-4" value="4" />
-                            <label for="rating-4" class="fa fa-star"></label>
-                            <input type="radio" name="rating" id="rating-5" value="5" />
-                            <label for="rating-5" class="fa fa-star"></label>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                        <div class="add-review-photos margin-bottom-30">
-                            <div class="photoUpload"> <span>Upload Photo <i
-                                        class="sl sl-icon-arrow-up-circle"></i></span>
-                                <input type="file" class="upload" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <form id="utf_add_comment" class="utf_add_comment">
-                    <fieldset>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label>Name:</label>
-                                <input type="text" placeholder="Name" value="" />
-                            </div>
-                            <div class="col-md-4">
-                                <label>Email:</label>
-                                <input type="text" placeholder="Email" value="" />
-                            </div>
-                            <div class="col-md-4">
-                                <label>Subject:</label>
-                                <input type="text" placeholder="Subject" value="" />
-                            </div>
-                        </div>
-                        <div>
-                            <label>Review:</label>
-                            <textarea cols="40" placeholder="Your Message..." rows="3"></textarea>
-                        </div>
-                    </fieldset>
-                    <button class="button">Submit Review</button>
-                    <div class="clearfix"></div>
-                </form>
             </div>
         </div>
 
@@ -394,12 +191,20 @@
                         <input type="hidden" name="hotel_id" value="{{hotel.id}}" id="hotel_id">
                         <div class="col-lg-12 col-md-12 select_date_box">
                             <label for="">Check-in Date</label>
-                            <input type="date" id="checkin" value="" name="checkin" placeholder="Select Date">
+                            <input type="date" id="checkin" class="checkin-date" value="" name="checkin" placeholder="Select Date">
                         </div>
                         <div class="col-lg-12 col-md-12 select_date_box">
                             <label for="">Check-out Date</label>
-                            <input type="date" id="checkout" value="" name="checkout" placeholder="Select Date">
+                            <input type="date" id="checkout" class="checkout-date" value="" name="checkout" placeholder="Select Date">
                         </div>
+
+                        <script>
+                            const today = new Date()
+                            const formatedToday = today.toISOString().split('T')[0]
+                            document.querySelector('.checkout-date').min = formatedToday
+                            document.querySelector('.checkin-date').min = formatedToday
+                        </script>
+
                         <div class="with-form">
                             <div class="col-lg-12 col-md-12">
                                 <a href="">Guests <span class="qtyTotal" name="qtyTotal">1</span></a>
@@ -503,90 +308,6 @@
                     <li>Gender Neutral Restrooms: <span>Yes</span></li>
                     <li>Waiter Service: <span>Yes</span></li>
                 </ul>
-            </div>
-            <div class="utf_box_widget opening-hours margin-top-35">
-                <h3><i class="sl sl-icon-envelope-open"></i> Sidebar Form</h3>
-                <form id="contactform">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <input name="name" type="text" placeholder="Name" required="">
-                        </div>
-                        <div class="col-md-12">
-                            <input name="email" type="email" placeholder="Email" required="">
-                        </div>
-                        <div class="col-md-12">
-                            <input name="phone" type="text" placeholder="Phone" required="">
-                        </div>
-                        <div class="col-md-12">
-                            <textarea name="comments" cols="40" rows="2" id="comments" placeholder="Your Message"
-                                required=""></textarea>
-                        </div>
-                    </div>
-                    <input type="submit" class="submit button" id="submit" value="Contact Agent">
-                </form>
-            </div>
-            <div class="utf_box_widget opening-hours margin-top-35">
-                <h3><i class="sl sl-icon-info"></i> Google AdSense</h3>
-                <span><img src="{% static 'images/google_adsense.jpg' %}" alt="" /></span>
-            </div>
-            <div class="utf_box_widget margin-top-35">
-                <h3><i class="sl sl-icon-phone"></i> Quick Contact to Help?</h3>
-                <p>Excepteur sint occaecat non proident, sunt in culpa officia deserunt mollit anim id est laborum.</p>
-                <ul class="utf_social_icon rounded">
-                    <li><a class="facebook" href="#"><i class="icon-facebook"></i></a></li>
-                    <li><a class="twitter" href="#"><i class="icon-twitter"></i></a></li>
-                    <li><a class="gplus" href="#"><i class="icon-gplus"></i></a></li>
-                    <li><a class="linkedin" href="#"><i class="icon-linkedin"></i></a></li>
-                    <li><a class="instagram" href="#"><i class="icon-instagram"></i></a></li>
-                </ul>
-                <a class="utf_progress_button button fullwidth_block margin-top-5" href="contact.html">Contact Us</a>
-            </div>
-            <div class="utf_box_widget listing-share margin-top-35 margin-bottom-40 no-border">
-                <h3><i class="sl sl-icon-pin"></i> Bookmark Listing</h3>
-                <span>1275 People Bookmarked Listings</span>
-                <button class="like-button"><span class="like-icon"></span> Login to Bookmark Listing</button>
-                <ul class="utf_social_icon rounded margin-top-35">
-                    <li><a class="facebook" href="#"><i class="icon-facebook"></i></a></li>
-                    <li><a class="twitter" href="#"><i class="icon-twitter"></i></a></li>
-                    <li><a class="gplus" href="#"><i class="icon-gplus"></i></a></li>
-                    <li><a class="linkedin" href="#"><i class="icon-linkedin"></i></a></li>
-                    <li><a class="instagram" href="#"><i class="icon-instagram"></i></a></li>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
-            <div class="utf_box_widget opening-hours review-avg-wrapper margin-top-35">
-                <h3><i class="sl sl-icon-star"></i> Rating Average </h3>
-                <div class="box-inner">
-                    <div class="rating-avg-wrapper text-theme clearfix">
-                        <div class="rating-avg">4.8</div>
-                        <div class="rating-after">
-                            <div class="rating-mode">/5 Average</div>
-
-                        </div>
-                    </div>
-                    <div class="ratings-avg-wrapper">
-                        <div class="ratings-avg-item">
-                            <div class="rating-label">Quality</div>
-                            <div class="rating-value text-theme">5.0</div>
-                        </div>
-                        <div class="ratings-avg-item">
-                            <div class="rating-label">Location</div>
-                            <div class="rating-value text-theme">4.5</div>
-                        </div>
-                        <div class="ratings-avg-item">
-                            <div class="rating-label">Space</div>
-                            <div class="rating-value text-theme">3.5</div>
-                        </div>
-                        <div class="ratings-avg-item">
-                            <div class="rating-label">Service</div>
-                            <div class="rating-value text-theme">4.0</div>
-                        </div>
-                        <div class="ratings-avg-item">
-                            <div class="rating-label">Price</div>
-                            <div class="rating-value text-theme">5.0</div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

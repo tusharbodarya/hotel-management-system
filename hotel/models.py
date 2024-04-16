@@ -46,7 +46,11 @@ NOTIFICATION_TYPE = (
 )
 
 RATING = (
-    (1, 1),
+    (1, "★☆☆☆☆"),
+    (2, "★★☆☆☆"),
+    (3, "★★★☆☆"),
+    (4, "★★★★☆"),
+    (5, "★★★★★"),
 )
 
 class Hotel(models.Model):
@@ -86,6 +90,13 @@ class Hotel(models.Model):
     
     def hotel_room_types(self):
         return RoomType.objects.filter(hotel=self)
+    
+    def average_rating(self):
+        average_reviews = Review.objects.filter(hotel=self).aggregate(avg_rating=models.Avg("rating"))
+        return average_reviews["avg_rating"]
+    
+    def rating_count(self):
+        return Review.objects.filter(hotel=self).count()
     
 class HotelGallery(models.Model):
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
@@ -274,3 +285,5 @@ class Review(models.Model):
     reply = models.TextField(null=True, blank=True)
     rating = models.PositiveIntegerField(default=None, choices=RATING)
     
+    def __str__(self):
+        return f"{self.user.username} - {self.hotel.name} - {self.rating}"

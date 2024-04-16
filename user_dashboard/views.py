@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.db import models
-from hotel.models import Hotel, Booking, ActivityLog, StaffOnDuty, Room, RoomType, HotelGallery, Coupon, Notification, Bookmark
+from hotel.models import Hotel, Booking, ActivityLog, StaffOnDuty, Room, RoomType, HotelGallery, Coupon, Notification, Bookmark, Review
 from userauths.models import Profile
 from django.contrib import messages
 from django.http import JsonResponse
@@ -130,3 +130,22 @@ def profile(request):
 @login_required
 def password_changed(request):
     return render(request, "user_dashboard/password-reset/password-changed.html")
+
+def add_review(request):
+    id = request.GET['id']
+    review = request.GET['review']
+    rating = request.GET['rating']
+    
+    hotel = Hotel.objects.get(id=id)
+    
+    review_check = Review.objects.filter(user=request.user, hotel=hotel)
+    if review_check.exists():
+        return JsonResponse({"data": "You have already reviewed this hotel", "icon": "warning"})
+    else:
+        Review.objects.create(
+            user=request.user,
+            hotel=hotel,
+            review=review,
+            rating=rating
+        )
+        return JsonResponse({"data": "Review added", "icon": "success"})

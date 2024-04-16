@@ -5,7 +5,7 @@ from django.conf import settings
 from django.urls import reverse
 from django.http import JsonResponse, HttpResponse
 
-from hotel.models import Hotel, Booking, ActivityLog, StaffOnDuty, Room, RoomType, Coupon, Notification, Bookmark
+from hotel.models import Hotel, Booking, ActivityLog, StaffOnDuty, Room, RoomType, Coupon, Notification, Bookmark, Review
 from datetime import datetime
 from django.utils import timezone
 from decimal import Decimal
@@ -23,9 +23,20 @@ def hotel_detail(request, slug):
     
     if request.user.is_authenticated:
         bookmark = Bookmark.objects.filter(user=request.user, hotel=hotel)
+    else:
+        bookmark = None
+        
+    all_review = Review.objects.filter(hotel=hotel)
+    try:
+        reviews = Review.objects.filter(user=request.user, hotel=hotel)
+    except:
+        reviews = None
+        
     context = {
         "hotel": hotel,
         "bookmark": bookmark,
+        "reviews": reviews,
+        "all_review": all_review,
     }
     return render(request, 'hotel/hotel_detail.html', context)
 

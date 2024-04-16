@@ -15,6 +15,7 @@ urlpatterns = [
     path("delete_bookmark/<bid>/", views.delete_bookmark, name="delete_bookmark"),
     path("add_to_bookmark/", views.add_to_bookmark, name="add_to_bookmark"),
     path("profile/", views.profile, name="profile"),
+    path("add_review/", views.add_review, name="add_review"),
     
     
     
